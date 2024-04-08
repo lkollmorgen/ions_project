@@ -17,5 +17,8 @@ python <ion1> <ion2>
 python ion_list()
 ```
 
-# ions_project
-# ions_project
+####
+
+### TODO
+----------
+- fix bug where user types 'ion_list()' and the next ions inputted are not checked
