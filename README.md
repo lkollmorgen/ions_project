@@ -1,24 +1,46 @@
 
 #
 # Ionic Compound Predictor
-#
-# Initialized 4.8.24
-#
+## Laura Jones
+## Initialized 4.8.24
 
-_The following script accepts two ions (one cation and one anion) from the command line and generates the proper molecular formula for the ionic compound._
+*The following script accepts two ions (one cation and one anion) from the command line or terminal and generates the proper molecular formula for the ionic compound.*
 
 ## Usage
+#### Command Line
 ```
-python <ion1> <ion2>
+python compound_main.py <ion1> <ion2>
 ```
-
-#### to see compatible ion list:
+#### Terminal
 ```
-python ion_list()
+python compound_main.py
+<ion1> <ion2>
 ```
-
-####
-
-### TODO
-----------
-- fix bug where user types 'ion_list()' and the next ions inputted are not checked
+#### See Compatible Ion List:
+```
+python compound_main.py 
+ion_list()
+<ion1> <ion2>
+```
+## <Ion 1> <Ion 2> List
+|Formula of Cation|Charge of Cation|Formula of Anion|Charge of Anion|
+|-----------------|----------------|----------------|---------------|
+li|1|f|1
+na|1|cl|1
+k|1|br|1
+cu(i)|1|i|1
+h|1|o|2
+rb|1|s|2
+cd|1|se|2
+ag|1|n|3
+cu(ii)|2|p|3
+zn|2|as|3
+ca|2||
+mg|2||
+fe(ii)|2||
+be|2||
+ba|2||
+sr|2||
+al|3||
+fe(iii)|3||
+co(iii)|3||

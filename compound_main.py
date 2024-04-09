@@ -1,4 +1,4 @@
-from ionic_compounds import CompoundCreator
+from compounds_class import CompoundCreator
 
 if __name__ == "__main__":
     

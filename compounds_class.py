@@ -1,4 +1,3 @@
-#! /bin/env python
 
 import math
 import csv
@@ -11,20 +10,21 @@ import pdb  # to use the debugger, python -mpdb filename.py input
 
 class CompoundCreator:
     def __init__(self):
-        
+        # define cation and anion dictionary
         self.cations, self.anions = self.get_ion_info()
-
+        # optional command line parser
         self.parser = argparse.ArgumentParser(description='Generate an ionic compound from input ions')
         self.parser.add_argument('ion1', type=str,nargs='?')
         self.parser.add_argument('ion2', type=str,nargs='?')
         self.cmd_args = self.check_parse()
+        
         if not self.cmd_args:
             print("Hello! Welcome to Compound Creator!")
             print("Enter both atomic symbols separated by a space (i.e. na cl)")
             print("To see a complete list of cations and anions for compound creation,",end='')
-            print("type 'ion_list()' at any time")
+            print("type 'ion_list()' now")
         
-        self.cat, self.an = self.valid_ion_check()   
+        self.valid_ion_check()   
         self.compound = self.generate_compound(self.cat, self.an)
         self.print_compound()
 
@@ -32,6 +32,7 @@ class CompoundCreator:
         print('Cations: ',self.cations)
         print('Anions: ',self.anions)
 
+# note if cmnd arguments were passed to generate a compound 
     def check_parse(self):
         self.args = self.parser.parse_args()
         if self.args.ion1 == None:
@@ -39,7 +40,7 @@ class CompoundCreator:
         return True
 
     def get_ion_info(self):
-        with open('ion_charges_sheet - Sheet1.csv', 'r') as f:
+        with open('io_charges_sheet.csv', 'r') as f:
             reader = csv.reader(f)
             data = list(reader)
 
@@ -61,28 +62,28 @@ class CompoundCreator:
             if anion_charge:
                 ans[anion] = int(anion_charge)
 
-        # pprint( 'cations: ' )
-        # pprint( cats )
-        # pprint( 'anions ' )
-        # pprint( ans )
-
         return cats, ans
 
     def valid_ion_check(self):
         while True:
-            #work on robust error checking. This is not ok
-            while input() == 'ion_list()':
-                self.ion_list()
-        
             #check if atoms were passed through arg parse. Then set to false to
             # fall into error-checking loop
             if self.cmd_args:
                 atom_1, atom_2 = self.args.ion1,self.args.ion2
                 self.cmd_args = False
-            else:   #TODO: fix after enter 'ion_list()', does not trigger this input
-                atom_1, atom_2  = input().lower().split(' ')
-                print('in last else')
+            else: 
+                atoms = input().lower()
+                while ' ' not in atoms:
+                    if atoms == 'ion_list()':
+                        print('fetching list')
+                        self.ion_list()
+                        atoms=input().lower()
+                    else:
+                        print('please input more than 1 atom')
+                        atoms = input().lower()
+                atom_1, atom_2  = atoms.split()
             
+        
         #begin setting cation and anion pair
             #identify the elements as cations or anions
             if atom_1 in self.anions.keys():
@@ -92,10 +93,8 @@ class CompoundCreator:
             else:   #sets cation and anion for next round of error checking
                 v_cation = atom_1
                 v_anion = atom_2
+            #Thorough error check
 
-            print(v_anion, v_cation)
-
-        #Thorough error check
             #if not on anion list, raise: please enter 'cation' 'anion'
             if v_cation not in self.cations:
                 print("Sorry, please enter a common cation. To see list, type 'ion_list()':")
@@ -105,7 +104,8 @@ class CompoundCreator:
             elif v_cation == v_anion:
                 print("Sorry, please enter two different ions. To see list, type 'ion_list()':")
             else:
-                return v_cation, v_anion
+                self.cat, self.an = v_cation, v_anion
+                break
 
     def generate_compound(self,cat, an):
         '''
