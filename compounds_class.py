@@ -1,9 +1,6 @@
 
-import math
 import csv
-import random
 import argparse
-from pprint import pprint
 
 import pdb  # to use the debugger, python -mpdb filename.py input
             # n to skip and run next line
@@ -22,7 +19,7 @@ class CompoundCreator:
             print("Hello! Welcome to Compound Creator!")
             print("Enter both atomic symbols separated by a space (i.e. na cl)")
             print("To see a complete list of cations and anions for compound creation,",end='')
-            print("type 'ion_list()' now")
+            print("type 'ion_list()' at any time")
         
         self.valid_ion_check()   
         self.compound = self.generate_compound(self.cat, self.an)
@@ -40,7 +37,7 @@ class CompoundCreator:
         return True
 
     def get_ion_info(self):
-        with open('io_charges_sheet.csv', 'r') as f:
+        with open('ion_charges_sheet.csv', 'r') as f:
             reader = csv.reader(f)
             data = list(reader)
 
@@ -48,7 +45,7 @@ class CompoundCreator:
             #seperate positive charges into a subcategory (cation) and
             #negative charges into a subcategory (anion)
 
-        with open('ion_charges_sheet - Sheet1.csv', 'r') as f:
+        with open('ion_charges_sheet.csv', 'r') as f:
             lines = f.readlines()
 
         cats = {}
@@ -93,7 +90,6 @@ class CompoundCreator:
             else:   #sets cation and anion for next round of error checking
                 v_cation = atom_1
                 v_anion = atom_2
-            #Thorough error check
 
             #if not on anion list, raise: please enter 'cation' 'anion'
             if v_cation not in self.cations:
@@ -108,23 +104,6 @@ class CompoundCreator:
                 break
 
     def generate_compound(self,cat, an):
-        '''
-            #finds index for elmental symbol in cations/anions arrays
-            cat_pos = np.where(cations == cat)
-            an_pos = np.where(anions == an)
-
-            #sets pre-processed cation and anion charges
-            cat_charge = str(cation_charges[cat_pos])
-            an_charge = str(anion_charges[an_pos])
-
-            #processes array value by removing brackets and quotes
-            cat_charge = cat_charge.strip("[]")
-            an_charge = an_charge.strip("[]")
-
-            cat_charge = int(cat_charge.strip("''"))
-            an_charge = int(an_charge.strip("''"))
-        '''
-
         cat_charge = self.cations[cat]
         an_charge = self.anions[an]
 

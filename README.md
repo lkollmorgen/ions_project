@@ -44,3 +44,7 @@ sr|2||
 al|3||
 fe(iii)|3||
 co(iii)|3||
+
+#### Reflection
+This project was very helpful in better understanding error handling and the finer details of user-input<br>
+The next step will be to integrate it into my [project website](www.beebsbackpack.com) using pyscript.
